@@ -2,6 +2,7 @@
 set_property  SEVERITY {Warning} [get_drc_checks UCIO-1]
 set_property  SEVERITY {Warning} [get_drc_checks NSTD-1]
 set_property  BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]
+
 # System
 set_property  PACKAGE_PIN R23           [get_ports "RST_B"]
 set_property  IOSTANDARD  LVCMOS25      [get_ports "RST_B"]
