@@ -292,13 +292,20 @@ OBUFDS #(
   .I(clk125)                 // Buffer input
 );
 
-reg [33:0] cnt;
-always @(posedge clkpll) cnt <= cnt + 1'b1;
+reg [25:0] cnt0;
+always @(posedge clk100) cnt0 <= cnt0 + 1'b1;
+
+reg [25:0] cnt1;
+always @(posedge clk125) cnt1 <= cnt1 + 1'b1;
+
+reg [25:0] cnt2;
+always @(posedge clkpll) cnt2 <= cnt2 + 1'b1;
+
+assign SYSLED[0] = ~cnt0[25];
+assign SYSLED[1] = ~cnt1[25];
+assign SYSLED[2] = ~cnt2[25];
 
 assign TESTPIN = DIPSW[3:0];
-
-assign SYSLED[1] = cnt[33];
-assign SYSLED[2] = DIPSW[6];
 
 genvar j;
 
@@ -316,8 +323,6 @@ for (j=0;j<=9;j=j+1) begin : s7_in_gen
   );
 end
 endgenerate
-
-assign SYSLED[0] = |s7_in;
 
 ////////////////////////////////////////////////////////////////////////////////
 // FPGA
