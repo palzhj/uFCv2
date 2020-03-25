@@ -69,14 +69,14 @@ module top
   inout   [33: 0] FMC0_LA_N,
   inout   [23: 0] FMC0_HA_P,
   inout   [23: 0] FMC0_HA_N,
-  input   [3 : 0] FMC0_DP_M2C_P,
-  input   [3 : 0] FMC0_DP_M2C_N,
-  output  [3 : 0] FMC0_DP_C2M_P,
-  output  [3 : 0] FMC0_DP_C2M_N,
-  input           MGTCLK118_P0,   // Reference Clock: 156.25MHz
-  input           MGTCLK118_N0,
-  input           MGTCLK118_P1,   // Reference Clock
-  input           MGTCLK118_N1,
+  // input   [3 : 0] FMC0_DP_M2C_P,
+  // input   [3 : 0] FMC0_DP_M2C_N,
+  // output  [3 : 0] FMC0_DP_C2M_P,
+  // output  [3 : 0] FMC0_DP_C2M_N,
+  // input           MGTCLK118_P0,   // Reference Clock: 156.25MHz
+  // input           MGTCLK118_N0,
+  // input           MGTCLK118_P1,   // Reference Clock
+  // input           MGTCLK118_N1,
 // FMC1
   input           FMC1_PRSNT_B,
   inout   [33: 0] FMC1_LA_P,
@@ -109,41 +109,41 @@ module top
   inout   [7 : 0] DDR3_DQS_N,
   output  [7 : 0] DDR3_DM,
 // SFP
-  output  [1 : 0] SFP_TX_P,
-  output  [1 : 0] SFP_TX_N,
-  input   [1 : 0] SFP_RX_P,
-  input   [1 : 0] SFP_RX_N,
-  input   [1 : 0] SFP_RX_LOS,
-  input   [1 : 0] SFP_DETECT,
-  input           MGTCLK117_P0,   // Reference Clock, 156.25MHz
-  input           MGTCLK117_N0,
-  input           MGTCLK117_P1,   // Reference Clock, 125MHz
-  input           MGTCLK117_N1,
+  // output  [1 : 0] SFP_TX_P,
+  // output  [1 : 0] SFP_TX_N,
+  // input   [1 : 0] SFP_RX_P,
+  // input   [1 : 0] SFP_RX_N,
+  // input   [1 : 0] SFP_RX_LOS,
+  // input   [1 : 0] SFP_DETECT,
+  // input           MGTCLK117_P0,   // Reference Clock, 156.25MHz
+  // input           MGTCLK117_N0,
+  // input           MGTCLK117_P1,   // Reference Clock, 125MHz
+  // input           MGTCLK117_N1,
 // AMC Rocket IO
-  output          AMC_TX_P0,      // AMC P0 Eth Bank 117
-  output          AMC_TX_N0,
-  input           AMC_RX_P0,
-  input           AMC_RX_N0,
-  output          AMC_TX_P1,      // AMC P1 Eth Bank 117
-  output          AMC_TX_N1,
-  input           AMC_RX_P1,
-  input           AMC_RX_N1,
-  output          AMC_TX_P4,      // AMC P4-7 PCIe Bank 115
-  output          AMC_TX_N4,
-  input           AMC_RX_P4,
-  input           AMC_RX_N4,
-  output          AMC_TX_P5,      // AMC P4-7 PCIe Bank 115
-  output          AMC_TX_N5,
-  input           AMC_RX_P5,
-  input           AMC_RX_N5,
-  output          AMC_TX_P6,      // AMC P4-7 PCIe Bank 115
-  output          AMC_TX_N6,
-  input           AMC_RX_P6,
-  input           AMC_RX_N6,
-  output          AMC_TX_P7,      // AMC P4-7 PCIe Bank 115
-  output          AMC_TX_N7,
-  input           AMC_RX_P7,
-  input           AMC_RX_N7,
+  // output          AMC_TX_P0,      // AMC P0 Eth Bank 117
+  // output          AMC_TX_N0,
+  // input           AMC_RX_P0,
+  // input           AMC_RX_N0,
+  // output          AMC_TX_P1,      // AMC P1 Eth Bank 117
+  // output          AMC_TX_N1,
+  // input           AMC_RX_P1,
+  // input           AMC_RX_N1,
+  // output          AMC_TX_P4,      // AMC P4-7 PCIe Bank 115
+  // output          AMC_TX_N4,
+  // input           AMC_RX_P4,
+  // input           AMC_RX_N4,
+  // output          AMC_TX_P5,      // AMC P4-7 PCIe Bank 115
+  // output          AMC_TX_N5,
+  // input           AMC_RX_P5,
+  // input           AMC_RX_N5,
+  // output          AMC_TX_P6,      // AMC P4-7 PCIe Bank 115
+  // output          AMC_TX_N6,
+  // input           AMC_RX_P6,
+  // input           AMC_RX_N6,
+  // output          AMC_TX_P7,      // AMC P4-7 PCIe Bank 115
+  // output          AMC_TX_N7,
+  // input           AMC_RX_P7,
+  // input           AMC_RX_N7,
   output          AMC_TX_P12,       // AMC P12-15 LVDS
   output          AMC_TX_N12,
   input           AMC_RX_P12,
@@ -159,11 +159,11 @@ module top
   output          AMC_TX_P15,       // AMC P12-15 LVDS
   output          AMC_TX_N15,
   input           AMC_RX_P15,
-  input           AMC_RX_N15,
-  input           MGTCLK115_P0,   // Reference Clock: 100MHz
-  input           MGTCLK115_N0,
-  input           MGTCLK115_P1,   // Reference Clock
-  input           MGTCLK115_N1
+  input           AMC_RX_N15
+  // input           MGTCLK115_P0,   // Reference Clock: 100MHz
+  // input           MGTCLK115_N0,
+  // input           MGTCLK115_P1,   // Reference Clock
+  // input           MGTCLK115_N1
 );
 
 wire rst;
@@ -293,29 +293,29 @@ for (j=0;j<=9;j=j+1) begin : s7_in_gen
 end
 endgenerate
 
-// DDR3L
-example_top ddr_test (
-  .ddr3_dq            (DDR3_D[63:0]),
-  .ddr3_dqs_n         (DDR3_DQS_N[7:0]),
-  .ddr3_dqs_p         (DDR3_DQS_P[7:0]),
-  .ddr3_addr          (DDR3_ADDR[15:0]),
-  .ddr3_ba            (DDR3_BA[2:0]),
-  .ddr3_ras_n         (DDR3_RAS_N),
-  .ddr3_cas_n         (DDR3_CAS_N),
-  .ddr3_we_n          (DDR3_WE_N),
-  .ddr3_reset_n       (DDR3_RESET_B),
-  .ddr3_ck_p          (DDR3_CLK_P[1:0]),
-  .ddr3_ck_n          (DDR3_CLK_N[1:0]),
-  .ddr3_cke           (DDR3_CKE[1:0]),
-  .ddr3_cs_n          (DDR3_S[1:0]),
-  .ddr3_dm            (DDR3_DM[7:0]),
-  .ddr3_odt           (DDR3_ODT[1:0]),
-  .sys_clk_i          (clkddr),
-  .clk_ref_i          (clk200),
-  .tg_compare_error   (SYSLED[1]),
-  .init_calib_complete(SYSLED[2]),
-  .sys_rst            (rst)
-);
+// // DDR3L
+// example_top ddr_test (
+//   .ddr3_dq            (DDR3_D[63:0]),
+//   .ddr3_dqs_n         (DDR3_DQS_N[7:0]),
+//   .ddr3_dqs_p         (DDR3_DQS_P[7:0]),
+//   .ddr3_addr          (DDR3_ADDR[15:0]),
+//   .ddr3_ba            (DDR3_BA[2:0]),
+//   .ddr3_ras_n         (DDR3_RAS_N),
+//   .ddr3_cas_n         (DDR3_CAS_N),
+//   .ddr3_we_n          (DDR3_WE_N),
+//   .ddr3_reset_n       (DDR3_RESET_B),
+//   .ddr3_ck_p          (DDR3_CLK_P[1:0]),
+//   .ddr3_ck_n          (DDR3_CLK_N[1:0]),
+//   .ddr3_cke           (DDR3_CKE[1:0]),
+//   .ddr3_cs_n          (DDR3_S[1:0]),
+//   .ddr3_dm            (DDR3_DM[7:0]),
+//   .ddr3_odt           (DDR3_ODT[1:0]),
+//   .sys_clk_i          (clkddr),
+//   .clk_ref_i          (clk200),
+//   .tg_compare_error   (SYSLED[1]),
+//   .init_calib_complete(SYSLED[2]),
+//   .sys_rst            (rst)
+// );
 
 ////////////////////////////////////////////////////////////////////////////////
 // FMC test
@@ -409,20 +409,20 @@ assign gtrefclk0n_i = {MGTCLK118_N0, MGTCLK117_N0, MGTCLK116_N0, MGTCLK115_N0};
 assign gtrefclk1p_i = {MGTCLK118_P1, MGTCLK117_P1, MGTCLK116_P1, MGTCLK115_P1};
 assign gtrefclk1n_i = {MGTCLK118_N1, MGTCLK117_N1, MGTCLK116_N1, MGTCLK115_N1};
 
-example_ibert_7series_gtx_0 example_ibert_7series_gtx_0
-(
-  // GT top level ports
-  .SYSCLKP_I    (SRCC_P),
-  .SYSCLKN_I    (SRCC_N),
-  .TXP_O        (txp_o),
-  .TXN_O        (txn_o),
-  .RXP_I        (rxp_i),
-  .RXN_I        (rxn_i),
-  .GTREFCLK0P_I (gtrefclk0p_i),
-  .GTREFCLK0N_I (gtrefclk0n_i),
-  .GTREFCLK1P_I (gtrefclk1p_i),
-  .GTREFCLK1N_I (gtrefclk1n_i)
-);
+// example_ibert_7series_gtx_0 example_ibert_7series_gtx_0
+// (
+//   // GT top level ports
+//   .SYSCLKP_I    (SRCC_P),
+//   .SYSCLKN_I    (SRCC_N),
+//   .TXP_O        (txp_o),
+//   .TXN_O        (txn_o),
+//   .RXP_I        (rxp_i),
+//   .RXN_I        (rxn_i),
+//   .GTREFCLK0P_I (gtrefclk0p_i),
+//   .GTREFCLK0N_I (gtrefclk0n_i),
+//   .GTREFCLK1P_I (gtrefclk1p_i),
+//   .GTREFCLK1N_I (gtrefclk1n_i)
+// );
 
 assign SYSLED[0] = SFP_RX_LOS[0] | SFP_RX_LOS[1] & SFP_DETECT[0] & SFP_DETECT[1];
 

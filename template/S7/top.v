@@ -36,25 +36,25 @@ module top_S7
   input   [1 : 0] CLK_IN_N,
   // CLK_IN0: PLL
   // CLK_IN1: WR 125MHz
-  output  [3 : 0] CLK_OUT_P,
-  output  [3 : 0] CLK_OUT_N,
-  input           FMC0_GTXCLK_M2C_P,
-  input           FMC0_GTXCLK_M2C_N,
-  input           FMC1_GTXCLK_M2C_P,
-  input           FMC1_GTXCLK_M2C_N,
-  input           FMC0_CLK_M2C_P,
-  input           FMC0_CLK_M2C_N,
-  input           FMC1_CLK_M2C_P,
-  input           FMC1_CLK_M2C_N,
-  output          FMC0_CLK_C2M_P,
-  output          FMC0_CLK_C2M_N,
-  output          FMC1_CLK_C2M_P,
-  output          FMC1_CLK_C2M_N,
-  output  [2 : 0] FPGA_GTXCLK_P,
-  output  [2 : 0] FPGA_GTXCLK_N,
+  // output  [3 : 0] CLK_OUT_P,
+  // output  [3 : 0] CLK_OUT_N,
+  // input           FMC0_GTXCLK_M2C_P,
+  // input           FMC0_GTXCLK_M2C_N,
+  // input           FMC1_GTXCLK_M2C_P,
+  // input           FMC1_GTXCLK_M2C_N,
+  // input           FMC0_CLK_M2C_P,
+  // input           FMC0_CLK_M2C_N,
+  // input           FMC1_CLK_M2C_P,
+  // input           FMC1_CLK_M2C_N,
+  // output          FMC0_CLK_C2M_P,
+  // output          FMC0_CLK_C2M_N,
+  // output          FMC1_CLK_C2M_P,
+  // output          FMC1_CLK_C2M_N,
+  // output  [2 : 0] FPGA_GTXCLK_P,
+  // output  [2 : 0] FPGA_GTXCLK_N,
 // IIC
-  inout           FPGA_SCL,       // I2C
-  inout           FPGA_SDA,
+  // inout           FPGA_SCL,       // I2C
+  // inout           FPGA_SDA,
 // FPGA interface
   input           FPGA_RST_B,     // from MCU
   input           FPGA_PROG_B,    
@@ -64,28 +64,28 @@ module top_S7
   output          FPGA_PROG_B_K7,
   input           FPGA_DONE_K7,
   input           FPGA_INIT_B_K7,
-  inout   [9 : 0] IO_P,           // user-defined io from/to K7
-  inout   [9 : 0] IO_N,
+  // inout   [9 : 0] IO_P,           // user-defined io from/to K7
+  // inout   [9 : 0] IO_N,
 // FLASH Interface
   // output          FLASH_CLK,
   // inout   [3 : 0] FLASH_D,
   // output          FLASH_CS_B,
 
 // MCU interface
-  input           MCU_CLK,
-  input           MCU_SPI1_SCK,
-  input           MCU_SPI1_NSS,
-  input           MCU_SPI1_MOSI,
-  output          MCU_SPI1_MISO,
-  input           MCU_SPI2_SCK,
-  input           MCU_SPI2_NSS,
-  input           MCU_SPI2_MOSI,
-  output          MCU_SPI2_MISO,   
-  input           MCU_UART_TX,
-  output          MCU_UART_RX,
+  // input           MCU_CLK,
+  // input           MCU_SPI1_SCK,
+  // input           MCU_SPI1_NSS,
+  // input           MCU_SPI1_MOSI,
+  // output          MCU_SPI1_MISO,
+  // input           MCU_SPI2_SCK,
+  // input           MCU_SPI2_NSS,
+  // input           MCU_SPI2_MOSI,
+  // output          MCU_SPI2_MISO,   
+  // input           MCU_UART_TX,
+  // output          MCU_UART_RX,
 // AMC interface
-  output  [20:17] AMC_TX,
-  input   [20:17] AMC_RX,
+  // output  [20:17] AMC_TX,
+  // input   [20:17] AMC_RX,
   output  [20:17] AMC_TX_DE,
   output  [20:17] AMC_RX_DE,
 // JTAG
@@ -124,20 +124,20 @@ module top_S7
 wire rst;
 assign rst = ~FPGA_PROG_B;
 
-wire clk100_in, clk100;
+wire clk156_in, clk156;
 IBUFDS #(
   .DIFF_TERM    ("TRUE"),       // Differential Termination
   .IBUF_LOW_PWR ("FALSE"),      // Low power="TRUE", Highest performance="FALSE"
   .IOSTANDARD   ("LVDS_25")     // Specify the input I/O standard
-) IBUFGDS_clk100 (
-  .O            (clk100_in),    // Buffer output
+) IBUFGDS_clk156 (
+  .O            (clk156_in),    // Buffer output
   .I            (CLK_INOUT_P),    // Diff_p buffer input (connect directly to top-level port)
   .IB           (CLK_INOUT_N)     // Diff_n buffer input (connect directly to top-level port)
 );
 
-BUFG BUFG_clk100 (
-  .O(clk100), // 1-bit output: Clock output
-  .I(clk100_in)  // 1-bit input: Clock input
+BUFG BUFG_clk156 (
+  .O(clk156), // 1-bit output: Clock output
+  .I(clk156_in)  // 1-bit input: Clock input
 );
 
 wire clkpll_in, clkpll;
@@ -172,157 +172,164 @@ BUFG BUFG_clk125 (
   .I(clk125_in)  // 1-bit input: Clock input
 );
 
-OBUFDS #(
-  .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
-  .SLEW("FAST")                 // Specify the output slew rate
-) OBUFDS_clks7_0 (
-  .O(CLK_OUT_P[0]),                // Diff_p output (connect directly to top-level port)
-  .OB(CLK_OUT_N[0]),               // Diff_n output (connect directly to top-level port)
-  .I(clk100)                    // Buffer input
-);
+// OBUFDS #(
+//   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
+//   .SLEW("FAST")                 // Specify the output slew rate
+// ) OBUFDS_clks7_0 (
+//   .O(CLK_OUT_P[0]),                // Diff_p output (connect directly to top-level port)
+//   .OB(CLK_OUT_N[0]),               // Diff_n output (connect directly to top-level port)
+//   .I(clk156)                    // Buffer input
+// );
 
-OBUFDS #(
-  .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
-  .SLEW("FAST")                 // Specify the output slew rate
-) OBUFDS_clks7_1 (
-  .O(CLK_OUT_P[1]),                // Diff_p output (connect directly to top-level port)
-  .OB(CLK_OUT_N[1]),               // Diff_n output (connect directly to top-level port)
-  .I(clk100)                    // Buffer input
-);
+// OBUFDS #(
+//   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
+//   .SLEW("FAST")                 // Specify the output slew rate
+// ) OBUFDS_clks7_1 (
+//   .O(CLK_OUT_P[1]),                // Diff_p output (connect directly to top-level port)
+//   .OB(CLK_OUT_N[1]),               // Diff_n output (connect directly to top-level port)
+//   .I(clk156)                    // Buffer input
+// );
 
-OBUFDS #(
-  .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
-  .SLEW("FAST")                 // Specify the output slew rate
-) OBUFDS_clks7_2 (
-  .O(CLK_OUT_P[2]),                // Diff_p output (connect directly to top-level port)
-  .OB(CLK_OUT_N[2]),               // Diff_n output (connect directly to top-level port)
-  .I(clk100)                 // Buffer input
-);
+// OBUFDS #(
+//   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
+//   .SLEW("FAST")                 // Specify the output slew rate
+// ) OBUFDS_clks7_2 (
+//   .O(CLK_OUT_P[2]),                // Diff_p output (connect directly to top-level port)
+//   .OB(CLK_OUT_N[2]),               // Diff_n output (connect directly to top-level port)
+//   .I(clk156)                 // Buffer input
+// );
 
-OBUFDS #(
-  .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
-  .SLEW("FAST")                 // Specify the output slew rate
-) OBUFDS_clks7_3 (
-  .O(CLK_OUT_P[3]),                // Diff_p output (connect directly to top-level port)
-  .OB(CLK_OUT_N[3]),               // Diff_n output (connect directly to top-level port)
-  .I(clk100)                  // Buffer input
-);
+// OBUFDS #(
+//   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
+//   .SLEW("FAST")                 // Specify the output slew rate
+// ) OBUFDS_clks7_3 (
+//   .O(CLK_OUT_P[3]),                // Diff_p output (connect directly to top-level port)
+//   .OB(CLK_OUT_N[3]),               // Diff_n output (connect directly to top-level port)
+//   .I(clk156)                  // Buffer input
+// );
 
-wire fmc0_gtxclk_in, fmc1_gtxclk_in;
-IBUFDS #(
-  .DIFF_TERM    ("TRUE"),       // Differential Termination
-  .IBUF_LOW_PWR ("FALSE"),      // Low power="TRUE", Highest performance="FALSE"
-  .IOSTANDARD   ("LVDS_25")     // Specify the input I/O standard
-) IBUFGDS_fmc0_gtxclk_in (
-  .O            (fmc0_gtxclk_in),    // Buffer output
-  .I            (FMC0_GTXCLK_M2C_P),    // Diff_p buffer input (connect directly to top-level port)
-  .IB           (FMC0_GTXCLK_M2C_N)     // Diff_n buffer input (connect directly to top-level port)
-);
-IBUFDS #(
-  .DIFF_TERM    ("TRUE"),       // Differential Termination
-  .IBUF_LOW_PWR ("FALSE"),      // Low power="TRUE", Highest performance="FALSE"
-  .IOSTANDARD   ("LVDS_25")     // Specify the input I/O standard
-) IBUFGDS_fmc1_gtxclk_in (
-  .O            (fmc1_gtxclk_in),    // Buffer output
-  .I            (FMC1_GTXCLK_M2C_P),    // Diff_p buffer input (connect directly to top-level port)
-  .IB           (FMC1_GTXCLK_M2C_N)     // Diff_n buffer input (connect directly to top-level port)
-);
+// wire fmc0_gtxclk_in, fmc1_gtxclk_in;
+// IBUFDS #(
+//   .DIFF_TERM    ("TRUE"),       // Differential Termination
+//   .IBUF_LOW_PWR ("FALSE"),      // Low power="TRUE", Highest performance="FALSE"
+//   .IOSTANDARD   ("LVDS_25")     // Specify the input I/O standard
+// ) IBUFGDS_fmc0_gtxclk_in (
+//   .O            (fmc0_gtxclk_in),    // Buffer output
+//   .I            (FMC0_GTXCLK_M2C_P),    // Diff_p buffer input (connect directly to top-level port)
+//   .IB           (FMC0_GTXCLK_M2C_N)     // Diff_n buffer input (connect directly to top-level port)
+// );
+// IBUFDS #(
+//   .DIFF_TERM    ("TRUE"),       // Differential Termination
+//   .IBUF_LOW_PWR ("FALSE"),      // Low power="TRUE", Highest performance="FALSE"
+//   .IOSTANDARD   ("LVDS_25")     // Specify the input I/O standard
+// ) IBUFGDS_fmc1_gtxclk_in (
+//   .O            (fmc1_gtxclk_in),    // Buffer output
+//   .I            (FMC1_GTXCLK_M2C_P),    // Diff_p buffer input (connect directly to top-level port)
+//   .IB           (FMC1_GTXCLK_M2C_N)     // Diff_n buffer input (connect directly to top-level port)
+// );
 
-wire fmc0_clk_in, fmc1_clk_in;
-IBUFDS #(
-  .DIFF_TERM    ("TRUE"),       // Differential Termination
-  .IBUF_LOW_PWR ("FALSE"),      // Low power="TRUE", Highest performance="FALSE"
-  .IOSTANDARD   ("LVDS_25")     // Specify the input I/O standard
-) IBUFGDS_fmc0_clk_in (
-  .O            (fmc0_clk_in),    // Buffer output
-  .I            (FMC0_CLK_M2C_P),    // Diff_p buffer input (connect directly to top-level port)
-  .IB           (FMC0_CLK_M2C_N)     // Diff_n buffer input (connect directly to top-level port)
-);
-IBUFDS #(
-  .DIFF_TERM    ("TRUE"),       // Differential Termination
-  .IBUF_LOW_PWR ("FALSE"),      // Low power="TRUE", Highest performance="FALSE"
-  .IOSTANDARD   ("LVDS_25")     // Specify the input I/O standard
-) IBUFGDS_fmc1_clk_in (
-  .O            (fmc1_clk_in),    // Buffer output
-  .I            (FMC1_CLK_M2C_P),    // Diff_p buffer input (connect directly to top-level port)
-  .IB           (FMC1_CLK_M2C_N)     // Diff_n buffer input (connect directly to top-level port)
-);
+// wire fmc0_clk_in, fmc1_clk_in;
+// IBUFDS #(
+//   .DIFF_TERM    ("TRUE"),       // Differential Termination
+//   .IBUF_LOW_PWR ("FALSE"),      // Low power="TRUE", Highest performance="FALSE"
+//   .IOSTANDARD   ("LVDS_25")     // Specify the input I/O standard
+// ) IBUFGDS_fmc0_clk_in (
+//   .O            (fmc0_clk_in),    // Buffer output
+//   .I            (FMC0_CLK_M2C_P),    // Diff_p buffer input (connect directly to top-level port)
+//   .IB           (FMC0_CLK_M2C_N)     // Diff_n buffer input (connect directly to top-level port)
+// );
+// IBUFDS #(
+//   .DIFF_TERM    ("TRUE"),       // Differential Termination
+//   .IBUF_LOW_PWR ("FALSE"),      // Low power="TRUE", Highest performance="FALSE"
+//   .IOSTANDARD   ("LVDS_25")     // Specify the input I/O standard
+// ) IBUFGDS_fmc1_clk_in (
+//   .O            (fmc1_clk_in),    // Buffer output
+//   .I            (FMC1_CLK_M2C_P),    // Diff_p buffer input (connect directly to top-level port)
+//   .IB           (FMC1_CLK_M2C_N)     // Diff_n buffer input (connect directly to top-level port)
+// );
 
-OBUFDS #(
-  .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
-  .SLEW("FAST")                 // Specify the output slew rate
-) OBUFDS_fmc0_clk_out (
-  .O(FMC0_CLK_C2M_P),                // Diff_p output (connect directly to top-level port)
-  .OB(FMC0_CLK_C2M_N),               // Diff_n output (connect directly to top-level port)
-  .I(clk100)                  // Buffer input
-);
-OBUFDS #(
-  .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
-  .SLEW("FAST")                 // Specify the output slew rate
-) OBUFDS_fmc1_clk_out (
-  .O(FMC1_CLK_C2M_P),                // Diff_p output (connect directly to top-level port)
-  .OB(FMC1_CLK_C2M_N),               // Diff_n output (connect directly to top-level port)
-  .I(clk100)                  // Buffer input
-);
+// OBUFDS #(
+//   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
+//   .SLEW("FAST")                 // Specify the output slew rate
+// ) OBUFDS_fmc0_clk_out (
+//   .O(FMC0_CLK_C2M_P),                // Diff_p output (connect directly to top-level port)
+//   .OB(FMC0_CLK_C2M_N),               // Diff_n output (connect directly to top-level port)
+//   .I(clk156)                  // Buffer input
+// );
+// OBUFDS #(
+//   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
+//   .SLEW("FAST")                 // Specify the output slew rate
+// ) OBUFDS_fmc1_clk_out (
+//   .O(FMC1_CLK_C2M_P),                // Diff_p output (connect directly to top-level port)
+//   .OB(FMC1_CLK_C2M_N),               // Diff_n output (connect directly to top-level port)
+//   .I(clk156)                  // Buffer input
+// );
 
-OBUFDS #(
-  .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
-  .SLEW("FAST")                 // Specify the output slew rate
-) obufds_gtxclks7_0 (
-  .O(FPGA_GTXCLK_P[0]),                // Diff_p output (connect directly to top-level port)
-  .OB(FPGA_GTXCLK_N[0]),               // Diff_n output (connect directly to top-level port)
-  .I(clk125)                    // Buffer input
-);
+// OBUFDS #(
+//   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
+//   .SLEW("FAST")                 // Specify the output slew rate
+// ) obufds_gtxclks7_0 (
+//   .O(FPGA_GTXCLK_P[0]),                // Diff_p output (connect directly to top-level port)
+//   .OB(FPGA_GTXCLK_N[0]),               // Diff_n output (connect directly to top-level port)
+//   .I(clk125)                    // Buffer input
+// );
 
-OBUFDS #(
-  .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
-  .SLEW("FAST")                 // Specify the output slew rate
-) obufds_gtxclks7_1 (
-  .O(FPGA_GTXCLK_P[1]),                // Diff_p output (connect directly to top-level port)
-  .OB(FPGA_GTXCLK_N[1]),               // Diff_n output (connect directly to top-level port)
-  .I(clk125)                    // Buffer input
-);
+// OBUFDS #(
+//   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
+//   .SLEW("FAST")                 // Specify the output slew rate
+// ) obufds_gtxclks7_1 (
+//   .O(FPGA_GTXCLK_P[1]),                // Diff_p output (connect directly to top-level port)
+//   .OB(FPGA_GTXCLK_N[1]),               // Diff_n output (connect directly to top-level port)
+//   .I(clk125)                    // Buffer input
+// );
 
-OBUFDS #(
-  .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
-  .SLEW("FAST")                 // Specify the output slew rate
-) obufds_gtxclks7_2 (
-  .O(FPGA_GTXCLK_P[2]),                // Diff_p output (connect directly to top-level port)
-  .OB(FPGA_GTXCLK_N[2]),               // Diff_n output (connect directly to top-level port)
-  .I(clk125)                 // Buffer input
-);
+// OBUFDS #(
+//   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
+//   .SLEW("FAST")                 // Specify the output slew rate
+// ) obufds_gtxclks7_2 (
+//   .O(FPGA_GTXCLK_P[2]),                // Diff_p output (connect directly to top-level port)
+//   .OB(FPGA_GTXCLK_N[2]),               // Diff_n output (connect directly to top-level port)
+//   .I(clk125)                 // Buffer input
+// );
 
-reg [25:0] cnt0;
-always @(posedge clk100) cnt0 <= cnt0 + 1'b1;
+reg [27:0] cnt0;
+always @(posedge clk156) 
+  if(~FPGA_RST_B) cnt0 <= 0;
+  else cnt0 <= cnt0 + 1'b1;
 
-reg [25:0] cnt1;
-always @(posedge clk125) cnt1 <= cnt1 + 1'b1;
+reg [27:0] cnt1;
+always @(posedge clkpll) 
+  if(~FPGA_RST_B) cnt1 <= 0;
+  else cnt1 <= cnt1 + 1'b1;
 
-reg [25:0] cnt2;
-always @(posedge clkpll) cnt2 <= cnt2 + 1'b1;
+reg [27:0] cnt2;
+always @(posedge clk125) 
+  if(~FPGA_RST_B) cnt2 <= 0;
+  else cnt2 <= cnt2 + 1'b1;
 
-assign SYSLED[0] = ~cnt0[25];
-assign SYSLED[1] = ~cnt1[25];
-assign SYSLED[2] = ~cnt2[25];
+assign SYSLED[0] = cnt0[27];
+assign SYSLED[1] = ~cnt1[27];
+assign SYSLED[2] = cnt2[27];
 
-assign TESTPIN = DIPSW[3:0];
+assign TESTPIN[2:0] = DIPSW[2:0];
+assign TESTPIN[3] = FPGA_RST_B_K7;
 
-genvar j;
+// genvar j;
 
-generate
-wire  [9 : 0] s7_in;
-for (j=0;j<=9;j=j+1) begin : s7_in_gen
-  IBUFDS #(
-    .DIFF_TERM("TRUE"),        // Differential Termination
-    .IBUF_LOW_PWR("TRUE"),     // Low power="TRUE", Highest performance="FALSE"
-    .IOSTANDARD("LVDS_25")     // Specify the input I/O standard
-  ) IBUFDS_fmc0_in (
-    .O(s7_in[j]),     // Buffer output
-    .I(IO_P[j]),      // Diff_p buffer input (connect directly to top-level port)
-    .IB(IO_N[j])      // Diff_n buffer input (connect directly to top-level port)
-  );
-end
-endgenerate
+// generate
+// wire  [9 : 0] s7_in;
+// for (j=0;j<=9;j=j+1) begin : s7_in_gen
+//   IBUFDS #(
+//     .DIFF_TERM("TRUE"),        // Differential Termination
+//     .IBUF_LOW_PWR("TRUE"),     // Low power="TRUE", Highest performance="FALSE"
+//     .IOSTANDARD("LVDS_25")     // Specify the input I/O standard
+//   ) IBUFDS_fmc0_in (
+//     .O(s7_in[j]),     // Buffer output
+//     .I(IO_P[j]),      // Diff_p buffer input (connect directly to top-level port)
+//     .IB(IO_N[j])      // Diff_n buffer input (connect directly to top-level port)
+//   );
+// end
+// endgenerate
 
 ////////////////////////////////////////////////////////////////////////////////
 // FPGA
@@ -333,32 +340,32 @@ assign FPGA_RST_B_K7  = FPGA_RST_B;
 
 ////////////////////////////////////////////////////////////////////////////////
 // MCU
-wire clk_mcu;
-BUFG BUFG_clkmcu (
-  .O(clk_mcu), // 1-bit output: Clock output
-  .I(MCU_CLK)  // 1-bit input: Clock input
-);
+// wire clk_mcu;
+// BUFG BUFG_clkmcu (
+//   .O(clk_mcu), // 1-bit output: Clock output
+//   .I(MCU_CLK)  // 1-bit input: Clock input
+// );
 
-reg spi1_temp;
-always @(posedge MCU_SPI1_SCK) 
-  if(~MCU_SPI1_NSS) spi1_temp <= MCU_SPI1_MOSI;
+// reg spi1_temp;
+// always @(posedge MCU_SPI1_SCK) 
+//   if(~MCU_SPI1_NSS) spi1_temp <= MCU_SPI1_MOSI;
 
-assign MCU_SPI1_MISO = spi1_temp;
+// assign MCU_SPI1_MISO = spi1_temp;
 
-reg spi2_temp;
-always @(posedge MCU_SPI2_SCK) 
-  if(~MCU_SPI2_NSS) spi2_temp <= MCU_SPI2_MOSI;
+// reg spi2_temp;
+// always @(posedge MCU_SPI2_SCK) 
+//   if(~MCU_SPI2_NSS) spi2_temp <= MCU_SPI2_MOSI;
 
-assign MCU_SPI2_MISO = spi2_temp;
+// assign MCU_SPI2_MISO = spi2_temp;
 
-reg uart_temp;
-always @(posedge clk_mcu) uart_temp <= MCU_UART_TX;
+// reg uart_temp;
+// always @(posedge clk_mcu) uart_temp <= MCU_UART_TX;
 
-assign MCU_UART_RX = ~uart_temp;
+// assign MCU_UART_RX = ~uart_temp;
 
 ////////////////////////////////////////////////////////////////////////////////
 // AMC
-assign AMC_TX = AMC_RX;
+// assign AMC_TX = AMC_RX;
 assign AMC_TX_DE = 4'b0;
 assign AMC_RX_DE = 4'b0;
 
