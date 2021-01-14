@@ -114,7 +114,7 @@ module top
   // input   [1 : 0] SFP_RX_P,
   // input   [1 : 0] SFP_RX_N,
   // input   [1 : 0] SFP_RX_LOS,
-  // input   [1 : 0] SFP_DETECT,
+  // input   [1 : 0] SFP_DETECT_B,
   // input           MGTCLK117_P0,   // Reference Clock, 156.25MHz
   // input           MGTCLK117_N0,
   // input           MGTCLK117_P1,   // Reference Clock, 125MHz
@@ -424,7 +424,7 @@ assign gtrefclk1n_i = {MGTCLK118_N1, MGTCLK117_N1, MGTCLK116_N1, MGTCLK115_N1};
 //   .GTREFCLK1N_I (gtrefclk1n_i)
 // );
 
-assign SYSLED[0] = SFP_RX_LOS[0] | SFP_RX_LOS[1] & SFP_DETECT[0] & SFP_DETECT[1];
+assign SYSLED[0] = SFP_RX_LOS[0] | SFP_RX_LOS[1] & SFP_DETECT_B[0] & SFP_DETECT_B[1];
 
 ////////////////////////////////////////////////////////////////////////////////
 // AMC
