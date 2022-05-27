@@ -39,4 +39,4 @@ The uFC is a double-width Advanced Mezzanine Card (AMC) conceived to serve a sma
 * Power
   * In bench-top prototyping, a 12V adapter is used as input power, and a switch helps to bypass the AMC initialization in MMC and 3.3V Management Power.
   * Voltage and Current measurement and management capability
-<img src="/readme/power.jpg">
+<img src="/readme/power.jpg" width="700px">
