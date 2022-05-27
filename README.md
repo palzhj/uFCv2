@@ -14,6 +14,7 @@ The uFC is a double-width Advanced Mezzanine Card (AMC) conceived to serve a sma
   * JTAG header provided for use with Xilinx download cables such as the Platform Cable USB II or Digilent USB cable
   * JTAG from AMC backboard 
 <img src="/readme/jtag.jpg" width="400px">
+
 * Communication & Networking
   * SFP/SFP+ cage x2
   * UART To USB Bridge
@@ -34,6 +35,7 @@ The uFC is a double-width Advanced Mezzanine Card (AMC) conceived to serve a sma
   * Jitter attenuated clock
     * Based on cross-point switches and programmable clock multipliers, the clock distribution circuit offers a large selection of input clock sources (e.g. the LEMO connectors in the front/rear panel, the AMC clocks, the FMC clocks, or onboard oscillators). This makes the uFC give users the possibility of implementing various high speed serial data protocols for custom applications.
 <img src="/readme/clocking.jpg">
+
 * Power
   * In bench-top prototyping, a 12V adapter is used as input power, and a switch helps to bypass the AMC initialization in MMC and 3.3V Management Power.
   * Voltage and Current measurement and management capability
