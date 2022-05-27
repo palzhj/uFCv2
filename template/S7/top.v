@@ -46,10 +46,10 @@ module top_S7
   // input           FMC0_CLK_M2C_N,
   // input           FMC1_CLK_M2C_P,
   // input           FMC1_CLK_M2C_N,
-  // output          FMC0_CLK_C2M_P,
-  // output          FMC0_CLK_C2M_N,
-  // output          FMC1_CLK_C2M_P,
-  // output          FMC1_CLK_C2M_N,
+  output          FMC0_CLK_C2M_P,
+  output          FMC0_CLK_C2M_N,
+  output          FMC1_CLK_C2M_P,
+  output          FMC1_CLK_C2M_N,
   // output  [2 : 0] FPGA_GTXCLK_P,
   // output  [2 : 0] FPGA_GTXCLK_N,
 // IIC
@@ -121,9 +121,6 @@ module top_S7
   input           FPGA_TDO
 );
 
-wire rst;
-assign rst = ~FPGA_PROG_B;
-
 wire clk156_in, clk156;
 IBUFDS #(
   .DIFF_TERM    ("TRUE"),       // Differential Termination
@@ -152,8 +149,8 @@ IBUFDS #(
 );
 
 BUFG BUFG_clkpll (
-  .O(clkpll), // 1-bit output: Clock output
-  .I(clkpll_in)  // 1-bit input: Clock input
+  .I(clkpll_in),  // 1-bit input: Clock input
+  .O(clkpll) // 1-bit output: Clock output
 );
 
 wire clk125_in, clk125;
@@ -168,9 +165,24 @@ IBUFDS #(
 );
 
 BUFG BUFG_clk125 (
-  .O(clk125), // 1-bit output: Clock output
-  .I(clk125_in)  // 1-bit input: Clock input
+  .I(clk125_in),  // 1-bit input: Clock input
+  .O(clk125) // 1-bit output: Clock output
 );
+
+wire clk40, locked;
+
+clk_wiz clk_wiz (
+  // Clock in ports
+  .clk_in1    (clkpll),
+  // Status and control signals
+  .reset      (~FPGA_PROG_B),
+  .locked     (locked),
+  // Clock out ports
+  .clk_out1   (clk40)
+);
+
+wire rst;
+assign rst = ~locked;
 
 // OBUFDS #(
 //   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
@@ -248,22 +260,22 @@ BUFG BUFG_clk125 (
 //   .IB           (FMC1_CLK_M2C_N)     // Diff_n buffer input (connect directly to top-level port)
 // );
 
-// OBUFDS #(
-//   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
-//   .SLEW("FAST")                 // Specify the output slew rate
-// ) OBUFDS_fmc0_clk_out (
-//   .O(FMC0_CLK_C2M_P),                // Diff_p output (connect directly to top-level port)
-//   .OB(FMC0_CLK_C2M_N),               // Diff_n output (connect directly to top-level port)
-//   .I(clk156)                  // Buffer input
-// );
-// OBUFDS #(
-//   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
-//   .SLEW("FAST")                 // Specify the output slew rate
-// ) OBUFDS_fmc1_clk_out (
-//   .O(FMC1_CLK_C2M_P),                // Diff_p output (connect directly to top-level port)
-//   .OB(FMC1_CLK_C2M_N),               // Diff_n output (connect directly to top-level port)
-//   .I(clk156)                  // Buffer input
-// );
+OBUFDS #(
+  .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
+  .SLEW("FAST")                 // Specify the output slew rate
+) OBUFDS_fmc0_clk_out (
+  .O(FMC0_CLK_C2M_P),                // Diff_p output (connect directly to top-level port)
+  .OB(FMC0_CLK_C2M_N),               // Diff_n output (connect directly to top-level port)
+  .I(clk40)                  // Buffer input
+);
+OBUFDS #(
+  .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
+  .SLEW("FAST")                 // Specify the output slew rate
+) OBUFDS_fmc1_clk_out (
+  .O(FMC1_CLK_C2M_P),                // Diff_p output (connect directly to top-level port)
+  .OB(FMC1_CLK_C2M_N),               // Diff_n output (connect directly to top-level port)
+  .I(clk40)                  // Buffer input
+);
 
 // OBUFDS #(
 //   .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
@@ -294,25 +306,31 @@ BUFG BUFG_clk125 (
 
 reg [27:0] cnt0;
 always @(posedge clk156) 
-  if(~FPGA_RST_B) cnt0 <= 0;
+  if(rst) cnt0 <= 0;
   else cnt0 <= cnt0 + 1'b1;
 
 reg [27:0] cnt1;
 always @(posedge clkpll) 
-  if(~FPGA_RST_B) cnt1 <= 0;
+  if(rst) cnt1 <= 0;
   else cnt1 <= cnt1 + 1'b1;
 
 reg [27:0] cnt2;
 always @(posedge clk125) 
-  if(~FPGA_RST_B) cnt2 <= 0;
+  if(rst) cnt2 <= 0;
   else cnt2 <= cnt2 + 1'b1;
 
 assign SYSLED[0] = cnt0[27];
 assign SYSLED[1] = ~cnt1[27];
 assign SYSLED[2] = cnt2[27];
 
-assign TESTPIN[2:0] = DIPSW[2:0];
-assign TESTPIN[3] = FPGA_RST_B_K7;
+OBUFDS #(
+  .IOSTANDARD("LVDS_25"),       // Specify the output I/O standard
+  .SLEW("FAST")                 // Specify the output slew rate
+) OBUFDS_test_clk_out (
+  .O(TESTPIN[0]),                // Diff_p output (connect directly to top-level port)
+  .OB(TESTPIN[1]),               // Diff_n output (connect directly to top-level port)
+  .I(clk40)                  // Buffer input
+);
 
 // genvar j;
 
