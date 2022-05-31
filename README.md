@@ -20,6 +20,64 @@ The uFC is a double-width Advanced Mezzanine Card (AMC) conceived to serve a sma
   * UART To USB Bridge
   * Expansion Connectors
     * FMC-HPC (Partial Population) connector x2 (4 GTX Transceiver, 116 single-ended or 58 differential (34 LA & 24 HA) user defined signals), Vadj can be selected to support 1.8V, 2.5V, or 3.3V
+
+    The table below summarizes the connections of FMC
+
+<table cellspacing="0" border="0">
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup span="2"></colgroup>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <tr>
+        <td rowspan=3 align="center" valign=middle>FMC</td>
+        <td colspan=8 align="center" valign=middle>HPC</td>
+        </tr>
+    <tr>
+        <td colspan=3 align="center" valign=middle>LPC</td>
+        <td align="left" valign=middle><br></td>
+        <td align="left" valign=middle><br></td>
+        <td align="left" valign=middle><br></td>
+        <td align="left" valign=middle><br></td>
+        <td align="left" valign=middle><br></td>
+    </tr>
+    <tr>
+        <td align="left" valign=middle>LA[16:0]</td>
+        <td align="left" valign=middle>LA[33:17]</td>
+        <td align="left" valign=middle>DP[0]</td>
+        <td align="left" valign=middle>DP[9:1]</td>
+        <td align="left" valign=middle>HA[16:0]</td>
+        <td align="left" valign=middle>HA[23:17]</td>
+        <td align="left" valign=middle>HB[16:0]</td>
+        <td align="left" valign=middle>HB[21:17]</td>
+    </tr>
+    <tr>
+        <td align="left" valign=middle>FMC0</td>
+        <td align="left" valign=middle>HR bank (1.8V, 2.5V, or 3.3V)</td>
+        <td align="left" valign=middle>HR bank (1.8V, 2.5V, or 3.3V)</td>
+        <td align="left" valign=middle>1 GTX</td>
+        <td align="left" valign=middle>3 GTX</td>
+        <td align="left" valign=middle>HR bank (1.8V, 2.5V, or 3.3V)</td>
+        <td align="left" valign=middle>HR bank (1.8V, 2.5V, or 3.3V)</td>
+        <td align="left" valign=middle>-</td>
+        <td align="left" valign=middle>-</td>
+    </tr>
+    <tr>
+        <td align="left" valign=middle>FMC1</td>
+        <td align="left" valign=middle>HR bank (1.8V, 2.5V, or 3.3V)</td>
+        <td align="left" valign=middle>HR bank (1.8V, 2.5V, or 3.3V)</td>
+        <td align="left" valign=middle>1 GTX</td>
+        <td align="left" valign=middle>3 GTX</td>
+        <td align="left" valign=middle>HR bank (1.8V, 2.5V, or 3.3V)</td>
+        <td align="left" valign=middle>HR bank (1.8V, 2.5V, or 3.3V)</td>
+        <td align="left" valign=middle>-</td>
+        <td align="left" valign=middle>-</td>
+    </tr>
+</table>
+
   * Control & I/O
     * 8x DIP Switches
     * FAN Header (2 I/O)
