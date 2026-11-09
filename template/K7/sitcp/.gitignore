@@ -1,0 +1,7 @@
+# Vivado project directory and build byproducts
+Projects
+.Xil
+.vivado-ai
+*.jou
+*.log
+scripts/*.tmp
